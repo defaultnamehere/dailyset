@@ -1,0 +1,328 @@
+/* src/index.css */
+
+/* --- CSS Variables and Base Styles (Mobile First) --- */
+:root {
+  --font-family-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  
+  --color-background: #f8f9fa;
+  --color-card-bg: #ffffff;
+  --color-text-primary: #212529;
+  --color-text-secondary: #6c757d;
+  --color-primary: #6d5dd8;
+  --color-primary-light: #e8e6f9;
+  --color-border: #dee2e6;
+  --color-success: #198754;
+  --color-congrats: #2a9d8f;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --border-radius: 12px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem; /* Reduced padding for mobile */
+}
+
+/* --- Typography --- */
+header h1 {
+  font-size: clamp(2rem, 8vw, 2.75rem); /* Fluid font size */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: clamp(1rem, 4vw, 1.1rem);
+  color: var(--color-text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* --- Layout (Mobile First) --- */
+.game-layout {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column for mobile */
+  gap: 2rem;
+}
+
+.sidebar {
+  position: static; /* No longer sticky on mobile */
+  max-height: none;
+  order: 3; /* Move sidebar to the bottom on mobile */
+}
+
+.game-content {
+  order: 1;
+}
+
+.game-actions {
+  order: 2;
+}
+
+/* --- Components --- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.sidebar, .game-actions {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.sidebar-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+}
+
+.game-actions {
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+  justify-content: center;
+}
+
+button {
+  flex-grow: 1; /* Allow buttons to grow and fill space */
+  min-width: 120px; /* Ensure buttons don't get too small */
+  border-radius: 8px;
+  border: none;
+  padding: 0.8em 1.5em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--color-primary);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s, transform 0.2s, box-shadow 0.2s;
+}
+button:hover {
+  background-color: #5a4db3;
+  box-shadow: var(--shadow-md);
+}
+button:active {
+  transform: scale(0.98);
+}
+
+.time-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.copy-button {
+  flex-grow: 0; /* Don't let the copy button grow */
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 0.8em;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.copy-button.copied {
+  background-color: var(--color-success);
+  color: white;
+}
+
+/* --- Tablet and larger screens --- */
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem; /* Restore larger padding */
+  }
+
+  .game-layout {
+    grid-template-columns: minmax(auto, 65ch) 300px;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+
+  .board {
+    grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns on larger screens as well */
+    gap: 1.25rem;
+  }
+
+  .sidebar {
+    position: sticky; /* Re-enable sticky sidebar */
+    top: 2rem;
+    max-height: calc(100vh - 4rem);
+    order: 2; /* Sidebar back to the right */
+  }
+
+  .game-content {
+    order: 1;
+  }
+  
+  .game-actions {
+    order: 2;
+  }
+}
+
+/* Other existing styles, slightly refactored for consistency */
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sidebar-header {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-stats {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.sidebar-content .no-sets-found {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.found-sets-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.found-set-item {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.mini-card {
+  width: 30%;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  margin: 0 0.75rem;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 28px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--color-primary);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(22px);
+}
+
+.victory-message {
+  text-align: center;
+  width: 100%;
+}
+
+.timer {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+button.secondary-button {
+  background-color: var(--color-card-bg);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+button.secondary-button:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.congrats {
+  color: var(--color-congrats);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes correct-flash-animation {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: var(--shadow-md);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 5px rgba(109, 93, 216, 0.7); /* Brighter, larger purple glow */
+  }
+}
+
+@keyframes incorrect-shake-animation {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+.card-correct {
+  animation: correct-flash-animation 0.25s ease-in-out;
+}
+
+.card-incorrect {
+  animation: incorrect-shake-animation 0.3s ease-in-out;
+}

@@ -1,0 +1,39 @@
+/* src/components/Card.css */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 3 / 2; /* Horizontal card shape */
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card.is-selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 15px var(--color-primary-light);
+}
+
+.card-symbols {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  width: 100%;
+  height: 100%;
+  padding: 12%; /* Adjust padding for horizontal layout */
+  box-sizing: border-box;
+}
+
+.card-symbol-svg {
+  width: 22%; /* Adjust symbol width for horizontal layout */
+  height: auto;
+}
