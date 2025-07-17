@@ -166,8 +166,7 @@ function App() {
         />
       ))}
       <header>
-        <h1>SET Puzzle</h1>
-        <p>Find all {allSets.length} sets among the 12 cards. <HelpIcon /></p>
+        <h1>Daily SET Puzzle <HelpIcon /></h1>
       </header>
       
       <div className="game-layout">
@@ -203,7 +202,7 @@ function App() {
             ) : (
               <>
                 <button onClick={winGame} className="secondary-button">Show Solution</button>
-                <label htmlFor="party-mode" className="toggle-switch">
+                <label htmlFor="party-mode" className="toggle-switch party-mode-toggle">
                   <input
                     type="checkbox"
                     id="party-mode"

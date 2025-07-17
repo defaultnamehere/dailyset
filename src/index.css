@@ -100,13 +100,19 @@ header p {
 }
 
 .game-actions {
-  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
-  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* This will push the button and toggle apart */
+  gap: 1rem;
+}
+
+.party-mode-toggle {
+  /* No margin needed now */
 }
 
 button {
-  flex-grow: 1; /* Allow buttons to grow and fill space */
-  min-width: 120px; /* Ensure buttons don't get too small */
+  flex-grow: 0; /* Prevent buttons from growing */
+  min-width: 120px;
   border-radius: 8px;
   border: none;
   padding: 0.8em 1.5em;
