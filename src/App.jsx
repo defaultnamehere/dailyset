@@ -4,6 +4,7 @@ import { generateBoard, checkSet } from './utils/game';
 import Card from './components/Card';
 import Confetti from 'react-confetti';
 import FoundSetsSidebar from './components/FoundSetsSidebar';
+import HelpIcon from './components/HelpIcon';
 import { formatInTimeZone } from 'date-fns-tz';
 import seedrandom from 'seedrandom';
 
@@ -17,7 +18,10 @@ function App() {
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
-  const [partyMode, setPartyMode] = useState(false);
+  const [partyMode, setPartyMode] = useState(() => {
+    const saved = localStorage.getItem('partyMode');
+    return saved !== null ? JSON.parse(saved) : false;
+  });
   const [explosions, setExplosions] = useState([]);
   const [copyButtonText, setCopyButtonText] = useState('Copy');
   const cardRefs = useRef(new Map());
@@ -71,6 +75,10 @@ function App() {
       setTimeout(() => setExplosions([]), 7000);
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem('partyMode', JSON.stringify(partyMode));
+  }, [partyMode]);
 
   useEffect(() => {
     startNewGame();
@@ -129,11 +137,11 @@ function App() {
   };
 
   const formatTime = (ms) => {
-    return `${(ms / 1000).toFixed(1)}s`;
+    return `${Math.round(ms / 1000)}s`;
   };
 
   const handleCopyTime = () => {
-    const timeInSeconds = (elapsedTime / 1000).toFixed(1);
+    const timeInSeconds = Math.round(elapsedTime / 1000);
     navigator.clipboard.writeText(timeInSeconds);
     setCopyButtonText('Copied!');
     setTimeout(() => setCopyButtonText('Copy'), 2000);
@@ -159,7 +167,7 @@ function App() {
       ))}
       <header>
         <h1>SET Puzzle</h1>
-        <p>Find all {allSets.length} sets among the 12 cards.</p>
+        <p>Find all {allSets.length} sets among the 12 cards. <HelpIcon /></p>
       </header>
       
       <div className="game-layout">
@@ -194,8 +202,7 @@ function App() {
               </div>
             ) : (
               <>
-                <button onClick={startNewGame}>New Game</button>
-                <button onClick={winGame} className="secondary-button">Win Game</button>
+                <button onClick={winGame} className="secondary-button">Show Solution</button>
                 <label htmlFor="party-mode" className="toggle-switch">
                   <input
                     type="checkbox"

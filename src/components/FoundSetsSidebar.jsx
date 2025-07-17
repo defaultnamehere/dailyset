@@ -16,12 +16,11 @@ const FoundSetsSidebar = ({ foundSets, totalSets }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <h2 className="sidebar-title">Found Sets</h2>
-        <p className="sidebar-stats">{foundSets.length} / {totalSets}</p>
+        {/* <h2 className="sidebar-title">Found Sets</h2> */}
       </div>
       <div className="sidebar-content">
         {foundSets.length === 0 ? (
-          <p className="no-sets-found">No sets found yet. Keep looking!</p>
+          <p className="no-sets-found"></p>
         ) : (
           <ul className="found-sets-list">
             {foundSets.map((set, index) => (

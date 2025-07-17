@@ -1,0 +1,18 @@
+/* src/components/HelpIcon.css */
+.help-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  color: #9ca3af; /* gray-400 */
+  transition: color 0.2s ease-in-out;
+}
+
+.help-icon-link:hover {
+  color: #4b5563; /* gray-600 */
+}
+
+.help-icon-svg {
+  width: 20px;
+  height: 20px;
+}
