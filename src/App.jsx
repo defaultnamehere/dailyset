@@ -191,9 +191,10 @@ function App() {
           <div className="game-actions">
             {isGameWon ? (
               <div className="victory-message">
-                <p className="congrats">Congratulations! You found all the sets!</p>
+                <p className="congrats">Puzzle clear!</p>
                 <div className="time-display">
-                  <p className="timer">Your time: {formatTime(elapsedTime)}</p>
+                  <p className="timer">You solved today's puzzle in:</p>
+                  <p>{formatTime(elapsedTime)}</p>
                   <button onClick={handleCopyTime} className={`copy-button ${copyButtonText === 'Copied!' ? 'copied' : ''}`}>
                     {copyButtonText}
                   </button>
