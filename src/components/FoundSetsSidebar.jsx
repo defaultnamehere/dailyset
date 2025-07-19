@@ -16,7 +16,7 @@ const FoundSetsSidebar = ({ foundSets, totalSets }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        {/* <h2 className="sidebar-title">Found Sets</h2> */}
+        <p className="sidebar-title">Found: {foundSets.length} / {totalSets}</p>
       </div>
       <div className="sidebar-content">
         {foundSets.length === 0 ? (

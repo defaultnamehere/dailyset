@@ -58,6 +58,24 @@ header p {
   margin: 0 auto;
 }
 
+.seed-date {
+  font-size: 0.9rem;
+  color: #cbcccd;
+  margin-top: 0.25rem;
+}
+
+.date-container {
+  position: relative;
+  text-align: center;
+  cursor: default;
+}
+
+.puzzle-time {
+  font-size: 0.9rem;
+  color: #cbcccd;
+  margin-top: 0.25rem;
+}
+
 /* --- Layout (Mobile First) --- */
 .game-layout {
   display: grid;
@@ -94,8 +112,8 @@ header p {
 }
 
 .sidebar-title {
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: 1rem;
+  /* font-weight: 600; */
   margin: 0 0 1.5rem 0;
 }
 
@@ -163,13 +181,13 @@ button:active {
 /* --- Tablet and larger screens --- */
 @media (min-width: 768px) {
   .container {
-    padding: 2rem; /* Restore larger padding */
+    padding: 1rem 2rem; /* Reduced vertical padding */
   }
 
   .game-layout {
     grid-template-columns: minmax(auto, 65ch) 300px;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 1.5rem; /* Reduced gap */
   }
 
   .board {
@@ -179,8 +197,8 @@ button:active {
 
   .sidebar {
     position: sticky; /* Re-enable sticky sidebar */
-    top: 2rem;
-    max-height: calc(100vh - 4rem);
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
     order: 2; /* Sidebar back to the right */
   }
 
@@ -196,7 +214,7 @@ button:active {
 /* Other existing styles, slightly refactored for consistency */
 header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem; /* Reduced margin */
 }
 
 .sidebar-header {

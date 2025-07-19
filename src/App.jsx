@@ -24,14 +24,35 @@ function App() {
   });
   const [explosions, setExplosions] = useState([]);
   const [copyButtonText, setCopyButtonText] = useState('Copy');
+  const [seedDate, setSeedDate] = useState('');
+  const [showPuzzleTime, setShowPuzzleTime] = useState(false);
   const cardRefs = useRef(new Map());
+  const puzzleTimeTimeoutRef = useRef(null);
 
-  
+  useEffect(() => {
+    // Cleanup timeout on component unmount
+    return () => {
+      if (puzzleTimeTimeoutRef.current) {
+        clearTimeout(puzzleTimeTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleShowPuzzleTime = () => {
+    if (puzzleTimeTimeoutRef.current) {
+      clearTimeout(puzzleTimeTimeoutRef.current);
+    }
+    setShowPuzzleTime(true);
+    puzzleTimeTimeoutRef.current = setTimeout(() => {
+      setShowPuzzleTime(false);
+    }, 1000);
+  };
 
   const startNewGame = useCallback(() => {
     const timeZone = 'Australia/Sydney';
     const today = new Date();
     const seed = formatInTimeZone(today, timeZone, 'yyyy-MM-dd');
+    setSeedDate(seed);
     const rng = seedrandom(seed);
 
     const { board: newBoard, sets: newSets } = generateBoard(rng);
@@ -167,6 +188,20 @@ function App() {
       ))}
       <header>
         <h1>Daily SET Puzzle <HelpIcon /></h1>
+        <div
+          className="date-container"
+          onMouseEnter={handleShowPuzzleTime}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            handleShowPuzzleTime();
+          }}
+        >
+          {showPuzzleTime ? (
+            <p className="puzzle-time">New puzzle at 00:00 Australia/Sydney</p>
+          ) : (
+            <p className="seed-date">{seedDate}</p>
+          )}
+        </div>
       </header>
       
       <div className="game-layout">
