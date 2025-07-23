@@ -95,6 +95,7 @@ header p {
 
 .game-actions {
   order: 2;
+  margin-top: 1rem;
 }
 
 /* --- Components --- */
@@ -104,7 +105,7 @@ header p {
   gap: 1rem;
 }
 
-.sidebar, .game-actions {
+.sidebar {
   background-color: var(--color-card-bg);
   border-radius: var(--border-radius);
   padding: 1.5rem;
@@ -113,8 +114,9 @@ header p {
 
 .sidebar-title {
   font-size: 1rem;
-  /* font-weight: 600; */
+  font-weight: 600;
   margin: 0 0 1.5rem 0;
+  text-align: center;
 }
 
 .game-actions {
@@ -122,6 +124,10 @@ header p {
   align-items: center;
   justify-content: space-between; /* This will push the button and toggle apart */
   gap: 1rem;
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
 }
 
 .party-mode-toggle {
@@ -252,9 +258,11 @@ header {
   border-radius: 8px;
 }
 
-.mini-card {
-  width: 30%;
+.mini-card .card:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
 }
+
 
 .toggle-switch {
   position: relative;
@@ -352,10 +360,19 @@ button.secondary-button:hover {
   80% { transform: translateX(5px); }
 }
 
+@keyframes already-found-overlay-animation {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
 .card-correct {
   animation: correct-flash-animation 0.25s ease-in-out;
 }
 
 .card-incorrect {
   animation: incorrect-shake-animation 0.3s ease-in-out;
+}
+
+.card-already-found::after {
+  animation: already-found-overlay-animation 0.5s ease-in-out;
 }

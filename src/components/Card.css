@@ -1,5 +1,6 @@
 /* src/components/Card.css */
 .card {
+  position: relative;
   background-color: #fff;
   border-radius: 8px;
   border: 2px solid transparent;
@@ -10,7 +11,22 @@
   justify-content: center;
   align-items: center;
   aspect-ratio: 3 / 2; /* Horizontal card shape */
+  overflow: hidden;
 }
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
 
 .card:hover {
   transform: translateY(-4px);
@@ -37,3 +53,16 @@
   width: 22%; /* Adjust symbol width for horizontal layout */
   height: auto;
 }
+
+.found-set-item .mini-card {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.card.mini {
+  width: 100%;
+  min-width: 40px;
+  max-width: 60px;
+  margin: 0 auto;
+}
+

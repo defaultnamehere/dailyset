@@ -4,6 +4,8 @@ import { generateBoard, checkSet } from './utils/game';
 import Card from './components/Card';
 import Confetti from 'react-confetti';
 import FoundSetsSidebar from './components/FoundSetsSidebar';
+import FoundSetsCounter from './components/FoundSetsCounter';
+import './components/FoundSetsCounter.css';
 import HelpIcon from './components/HelpIcon';
 import { formatInTimeZone } from 'date-fns-tz';
 import seedrandom from 'seedrandom';
@@ -121,7 +123,9 @@ function App() {
       const isSet = checkSet(...selectedCards);
       if (isSet) {
         const setString = [...selectedCards].sort().join('');
-        if (allSets.includes(setString) && !foundSets.includes(setString)) {
+        if (foundSets.includes(setString)) {
+          setSelectionResult('already-found');
+        } else if (allSets.includes(setString)) {
           if (partyMode) triggerExplosion();
           setFoundSets(prev => [...prev, setString]);
           setSelectionResult('correct');
@@ -206,6 +210,7 @@ function App() {
       
       <div className="game-layout">
         <main className="game-content">
+          <FoundSetsCounter found={foundSets.length} total={allSets.length} />
           <div className="board">
             {board.map((cardValue) => {
               if (!cardRefs.current.has(cardValue)) {
@@ -251,7 +256,7 @@ function App() {
             )}
           </div>
         </main>
-        <FoundSetsSidebar foundSets={foundSets} totalSets={allSets.length} />
+        <FoundSetsSidebar foundSets={foundSets} />
       </div>
     </div>
   );

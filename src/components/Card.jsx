@@ -7,13 +7,15 @@ const COLORS = ['#800080', '#008000', '#FF0000']; // Purple, Green, Red
 const SHAPES = ['squiggle', 'oval', 'diamond'];
 const SHADES = ['filled', 'outline', 'striped'];
 
-const Symbol = ({ color, shape, shade }) => {
+const Symbol = ({ color, shape, shade, mini }) => {
   const strokeColor = COLORS[color];
   const shapeId = `#${SHAPES[shape]}`;
   const shadeName = SHADES[shade];
 
   const fill = shadeName === 'outline' ? 'transparent' : strokeColor;
   const mask = shadeName === 'striped' ? 'url(#mask-stripe)' : '';
+  const strokeWidth = mini ? 12 : 18;
+
 
   return (
     <svg
@@ -25,7 +27,7 @@ const Symbol = ({ color, shape, shade }) => {
         fill={fill}
         mask={mask}
       />
-      <use href={shapeId} stroke={strokeColor} fill="none" strokeWidth={18} />
+      <use href={shapeId} stroke={strokeColor} fill="none" strokeWidth={strokeWidth} />
     </svg>
   );
 };
@@ -34,18 +36,20 @@ Symbol.propTypes = {
     color: PropTypes.number.isRequired,
     shape: PropTypes.number.isRequired,
     shade: PropTypes.number.isRequired,
+    mini: PropTypes.bool,
 };
 
-const Card = forwardRef(({ value, isSelected, onClick, animation }, ref) => {
+const Card = forwardRef(({ value, isSelected, onClick, animation, mini }, ref) => {
   const [color, shape, shade, number] = value.split('').map(Number);
 
-  const animationClass = animation === 'correct' ? 'card-correct' : animation === 'incorrect' ? 'card-incorrect' : '';
+  const animationClass = animation === 'correct' ? 'card-correct' : animation === 'incorrect' ? 'card-incorrect' : animation === 'already-found' ? 'card-already-found' : '';
   const selectedClass = isSelected ? 'is-selected' : '';
+  const miniClass = mini ? 'mini' : '';
 
   return (
     <div
       ref={ref}
-      className={`card ${selectedClass} ${animationClass}`}
+      className={`card ${selectedClass} ${animationClass} ${miniClass}`}
       onClick={onClick}
     >
       <div className="card-symbols">
@@ -55,6 +59,7 @@ const Card = forwardRef(({ value, isSelected, onClick, animation }, ref) => {
             color={color}
             shape={shape}
             shade={shade}
+            mini={mini}
           />
         ))}
       </div>
@@ -66,13 +71,15 @@ Card.propTypes = {
     value: PropTypes.string.isRequired,
     isSelected: PropTypes.bool,
     onClick: PropTypes.func,
-    animation: PropTypes.oneOf(['correct', 'incorrect', null]),
+    animation: PropTypes.oneOf(['correct', 'incorrect', 'already-found', null]),
+    mini: PropTypes.bool,
 };
 
 Card.defaultProps = {
   isSelected: false,
   onClick: null,
   animation: null,
+  mini: false,
 };
 
 export default Card;

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 
-const FoundSetsSidebar = ({ foundSets, totalSets }) => {
+const FoundSetsSidebar = ({ foundSets }) => {
   // Helper function to split a set string (e.g., "012011212212") into an array of cards (e.g., ["0120", "1121", "2212"])
   const splitSetString = (setString) => {
     const cards = [];
@@ -16,19 +16,19 @@ const FoundSetsSidebar = ({ foundSets, totalSets }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <p className="sidebar-title">Found: {foundSets.length} / {totalSets}</p>
+        <p className="sidebar-title">Found Sets</p>
       </div>
       <div className="sidebar-content">
         {foundSets.length === 0 ? (
-          <p className="no-sets-found"></p>
+          <p className="no-sets-found">No sets found yet!</p>
         ) : (
           <ul className="found-sets-list">
             {foundSets.map((set, index) => (
               <li key={index} className="found-set-item">
                 {splitSetString(set).map((cardValue, cardIndex) => (
                   <div className="mini-card" key={cardIndex}>
-                    <Card value={cardValue} size={14} />
-                  </div>
+  <Card value={cardValue} mini />
+</div>
                 ))}
               </li>
             ))}
@@ -41,7 +41,6 @@ const FoundSetsSidebar = ({ foundSets, totalSets }) => {
 
 FoundSetsSidebar.propTypes = {
   foundSets: PropTypes.arrayOf(PropTypes.string).isRequired,
-  totalSets: PropTypes.number.isRequired,
 };
 
 export default FoundSetsSidebar;
