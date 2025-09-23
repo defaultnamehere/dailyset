@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import './Card.css';
 
-const COLORS = ['#800080', '#008000', '#FF0000']; // Purple, Green, Red
+const COLORS = ['#9966CC', '#22CC22', '#FF3333']; // Brighter Purple, Green, Red
 const SHAPES = ['squiggle', 'oval', 'diamond'];
 const SHADES = ['filled', 'outline', 'striped'];
 
@@ -33,10 +33,10 @@ const Symbol = ({ color, shape, shade, mini }) => {
 };
 
 Symbol.propTypes = {
-    color: PropTypes.number.isRequired,
-    shape: PropTypes.number.isRequired,
-    shade: PropTypes.number.isRequired,
-    mini: PropTypes.bool,
+  color: PropTypes.number.isRequired,
+  shape: PropTypes.number.isRequired,
+  shade: PropTypes.number.isRequired,
+  mini: PropTypes.bool,
 };
 
 const Card = forwardRef(({ value, isSelected, onClick, animation, mini }, ref) => {
@@ -68,11 +68,11 @@ const Card = forwardRef(({ value, isSelected, onClick, animation, mini }, ref) =
 });
 
 Card.propTypes = {
-    value: PropTypes.string.isRequired,
-    isSelected: PropTypes.bool,
-    onClick: PropTypes.func,
-    animation: PropTypes.oneOf(['correct', 'incorrect', 'already-found', null]),
-    mini: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool,
+  onClick: PropTypes.func,
+  animation: PropTypes.oneOf(['correct', 'incorrect', 'already-found', null]),
+  mini: PropTypes.bool,
 };
 
 Card.defaultProps = {
