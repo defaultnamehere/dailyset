@@ -206,7 +206,7 @@ button:active {
   }
 
   .game-layout {
-    grid-template-columns: minmax(auto, 65ch) 300px;
+    grid-template-columns: minmax(auto, 80ch) 220px;
     justify-content: center;
     gap: 1.5rem;
     /* Reduced gap */
