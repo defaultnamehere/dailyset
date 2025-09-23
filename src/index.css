@@ -4,14 +4,17 @@
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
 /* --- CSS Variables and Base Styles (Mobile First) --- */
 :root {
   --font-family-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  
+
   --color-background: #f8f9fa;
   --color-card-bg: #ffffff;
   --color-text-primary: #212529;
@@ -41,12 +44,14 @@ body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem; /* Reduced padding for mobile */
+  padding: 1rem;
+  /* Reduced padding for mobile */
 }
 
 /* --- Typography --- */
 header h1 {
-  font-size: clamp(2rem, 8vw, 2.75rem); /* Fluid font size */
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  /* Fluid font size */
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
@@ -79,14 +84,17 @@ header p {
 /* --- Layout (Mobile First) --- */
 .game-layout {
   display: grid;
-  grid-template-columns: 1fr; /* Single column for mobile */
+  grid-template-columns: 1fr;
+  /* Single column for mobile */
   gap: 2rem;
 }
 
 .sidebar {
-  position: static; /* No longer sticky on mobile */
+  position: static;
+  /* No longer sticky on mobile */
   max-height: none;
-  order: 3; /* Move sidebar to the bottom on mobile */
+  order: 3;
+  /* Move sidebar to the bottom on mobile */
 }
 
 .game-content {
@@ -101,7 +109,7 @@ header p {
 /* --- Components --- */
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 
@@ -122,7 +130,8 @@ header p {
 .game-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* This will push the button and toggle apart */
+  justify-content: space-between;
+  /* This will push the button and toggle apart */
   gap: 1rem;
   background-color: var(--color-card-bg);
   border-radius: var(--border-radius);
@@ -135,7 +144,8 @@ header p {
 }
 
 button {
-  flex-grow: 0; /* Prevent buttons from growing */
+  flex-grow: 0;
+  /* Prevent buttons from growing */
   min-width: 120px;
   border-radius: 8px;
   border: none;
@@ -148,10 +158,12 @@ button {
   cursor: pointer;
   transition: background-color 0.25s, transform 0.2s, box-shadow 0.2s;
 }
+
 button:hover {
   background-color: #5a4db3;
   box-shadow: var(--shadow-md);
 }
+
 button:active {
   transform: scale(0.98);
 }
@@ -161,13 +173,15 @@ button:active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem; /* Reduced gap for vertical layout */
+  gap: 0.5rem;
+  /* Reduced gap for vertical layout */
   margin-top: 1rem;
   width: 100%;
 }
 
 .copy-button {
-  flex-grow: 0; /* Don't let the copy button grow */
+  flex-grow: 0;
+  /* Don't let the copy button grow */
   background-color: var(--color-primary-light);
   color: var(--color-primary);
   border: none;
@@ -187,31 +201,36 @@ button:active {
 /* --- Tablet and larger screens --- */
 @media (min-width: 768px) {
   .container {
-    padding: 1rem 2rem; /* Reduced vertical padding */
+    padding: 1rem 2rem;
+    /* Reduced vertical padding */
   }
 
   .game-layout {
     grid-template-columns: minmax(auto, 65ch) 300px;
     justify-content: center;
-    gap: 1.5rem; /* Reduced gap */
+    gap: 1.5rem;
+    /* Reduced gap */
   }
 
   .board {
-    grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns on larger screens as well */
+    grid-template-columns: repeat(4, 1fr);
+    /* Ensure 4 columns on larger screens as well */
     gap: 1rem;
   }
 
   .sidebar {
-    position: sticky; /* Re-enable sticky sidebar */
+    position: sticky;
+    /* Re-enable sticky sidebar */
     top: 1rem;
     max-height: calc(100vh - 2rem);
-    order: 2; /* Sidebar back to the right */
+    order: 2;
+    /* Sidebar back to the right */
   }
 
   .game-content {
     order: 1;
   }
-  
+
   .game-actions {
     order: 2;
   }
@@ -220,7 +239,8 @@ button:active {
 /* Other existing styles, slightly refactored for consistency */
 header {
   text-align: center;
-  margin-bottom: 1.5rem; /* Reduced margin */
+  margin-bottom: 1.5rem;
+  /* Reduced margin */
 }
 
 .sidebar-header {
@@ -302,11 +322,11 @@ header {
   border-radius: 50%;
 }
 
-input:checked + .toggle-slider {
+input:checked+.toggle-slider {
   background-color: var(--color-primary);
 }
 
-input:checked + .toggle-slider:before {
+input:checked+.toggle-slider:before {
   transform: translateX(22px);
 }
 
@@ -342,27 +362,54 @@ button.secondary-button:hover {
 
 /* Animations */
 @keyframes correct-flash-animation {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: var(--shadow-md);
   }
+
   50% {
     transform: scale(1.05);
-    box-shadow: 0 0 20px 5px rgba(109, 93, 216, 0.7); /* Brighter, larger purple glow */
+    box-shadow: 0 0 20px 5px rgba(109, 93, 216, 0.7);
+    /* Brighter, larger purple glow */
   }
 }
 
 @keyframes incorrect-shake-animation {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-5px);
+  }
+
+  40% {
+    transform: translateX(5px);
+  }
+
+  60% {
+    transform: translateX(-5px);
+  }
+
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 @keyframes already-found-overlay-animation {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 .card-correct {
