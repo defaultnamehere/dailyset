@@ -66,3 +66,7 @@
   margin: 0 auto;
 }
 
+.card.mini .card-symbols {
+  padding: 4%; /* Reduced padding for mini cards */
+}
+

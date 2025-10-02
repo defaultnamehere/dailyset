@@ -93,9 +93,19 @@ function App() {
       .filter(Boolean);
 
     if (sources.length === 3) {
-      setExplosions(sources);
-      // Cleanup the confetti components after they've had plenty of time to fall
-      setTimeout(() => setExplosions([]), 7000);
+      const explosionId = Date.now(); // Unique ID for this explosion
+      const newExplosion = {
+        id: explosionId,
+        sources: sources
+      };
+      
+      // Add new explosion to existing ones
+      setExplosions(prev => [...prev, newExplosion]);
+      
+      // Remove this specific explosion after animation completes
+      setTimeout(() => {
+        setExplosions(prev => prev.filter(explosion => explosion.id !== explosionId));
+      }, 7000);
     }
   };
 
@@ -173,62 +183,67 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div className="">
       {isGameWon && <Confetti width={windowSize.width} height={windowSize.height} />}
-      {explosions.length > 0 && explosions.map((source, i) => (
-        <Confetti
-          key={i}
-          width={windowSize.width}
-          height={windowSize.height}
-          recycle={false}
-          numberOfPieces={100}
-          initialVelocityX={{ min: -30, max: 30}}
-          initialVelocityY={{ min: -50, max: -20}}
-          gravity={0.4}
-          friction={0.95}
-          tweenDuration={50}
-          confettiSource={source}
-        />
-      ))}
+      {explosions.length > 0 && explosions.map((explosion) => 
+        explosion.sources.map((source, sourceIndex) => (
+          <Confetti
+            key={`${explosion.id}-${sourceIndex}`}
+            width={windowSize.width}
+            height={windowSize.height}
+            recycle={false}
+            numberOfPieces={100}
+            initialVelocityX={{ min: -30, max: 30}}
+            initialVelocityY={{ min: -50, max: -20}}
+            gravity={0.4}
+            friction={0.95}
+            tweenDuration={50}
+            confettiSource={source}
+          />
+        ))
+      ).flat()}
       <header>
-        <h1>Daily SET Puzzle <HelpIcon /></h1>
-        <div
-          className="date-container"
-          onMouseEnter={handleShowPuzzleTime}
-          onTouchStart={(e) => {
-            e.preventDefault();
-            handleShowPuzzleTime();
-          }}
-        >
-          {showPuzzleTime ? (
-            <p className="puzzle-time">New puzzle at 00:00 Australia/Sydney</p>
-          ) : (
-            <p className="seed-date">{seedDate}</p>
-          )}
+        <div className="header-top">
+          <h1>Daily SET Puzzle <HelpIcon /></h1>
+          <div
+            className="date-container"
+            onMouseEnter={handleShowPuzzleTime}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              handleShowPuzzleTime();
+            }}
+          >
+            {showPuzzleTime ? (
+              <p className="puzzle-time">New puzzle at 00:00 Australia/Sydney</p>
+            ) : (
+              <p className="seed-date">{seedDate}</p>
+            )}
+          </div>
         </div>
       </header>
       
       <div className="game-layout">
-        <main className="game-content">
-          <FoundSetsCounter found={foundSets.length} total={allSets.length} />
-          <div className="board">
-            {board.map((cardValue) => {
-              if (!cardRefs.current.has(cardValue)) {
-                cardRefs.current.set(cardValue, React.createRef());
-              }
-              return (
-                <Card
-                  ref={cardRefs.current.get(cardValue)}
-                  key={cardValue}
-                  value={cardValue}
-                  isSelected={selectedCards.includes(cardValue)}
-                  onClick={() => handleCardClick(cardValue)}
-                  animation={selectedCards.includes(cardValue) ? selectionResult : null}
-                />
-              );
-            })}
-          </div>
-          <div className="game-actions">
+        <div className="game-main">
+          <main className="game-content">
+            {/* <FoundSetsCounter found={foundSets.length} total={allSets.length} /> */}
+            <div className="board">
+              {board.map((cardValue) => {
+                if (!cardRefs.current.has(cardValue)) {
+                  cardRefs.current.set(cardValue, React.createRef());
+                }
+                return (
+                  <Card
+                    ref={cardRefs.current.get(cardValue)}
+                    key={cardValue}
+                    value={cardValue}
+                    isSelected={selectedCards.includes(cardValue)}
+                    onClick={() => handleCardClick(cardValue)}
+                    animation={selectedCards.includes(cardValue) ? selectionResult : null}
+                  />
+                );
+              })}
+            </div>
+            <div className="game-actions">
             {isGameWon ? (
               <div className="victory-message">
                 <p className="congrats">Puzzle clear!</p>
@@ -255,8 +270,9 @@ function App() {
               </>
             )}
           </div>
-        </main>
-        <FoundSetsSidebar foundSets={foundSets} />
+          </main>
+          <FoundSetsSidebar foundSets={foundSets} />
+        </div>
       </div>
     </div>
   );
