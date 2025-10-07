@@ -216,6 +216,13 @@ button:active {
   color: white;
 }
 
+/* --- Mobile only --- */
+@media (max-width: 767px) {
+  .header-top {
+    padding: 2rem 0;
+  }
+}
+
 /* --- Tablet and larger screens --- */
 @media (min-width: 768px) {
   .container {
