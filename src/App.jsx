@@ -25,7 +25,7 @@ function App() {
     return saved !== null ? JSON.parse(saved) : false;
   });
   const [explosions, setExplosions] = useState([]);
-  const [copyButtonText, setCopyButtonText] = useState('Copy');
+  const [copyButtonText, setCopyButtonText] = useState('Share Results');
   const [seedDate, setSeedDate] = useState('');
   const [showPuzzleTime, setShowPuzzleTime] = useState(false);
   const cardRefs = useRef(new Map());
@@ -67,7 +67,7 @@ function App() {
     setStartTime(Date.now());
     setElapsedTime(0);
     setExplosions([]);
-    setCopyButtonText('Copy');
+    setCopyButtonText('Share Results');
     cardRefs.current.clear();
   }, []);
 
@@ -177,9 +177,11 @@ function App() {
 
   const handleCopyTime = () => {
     const timeInSeconds = Math.round(elapsedTime / 1000);
-    navigator.clipboard.writeText(timeInSeconds);
+    const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
+    const text = `Daily SET\n${today}\n${timeInSeconds} seconds\nPlay it yourself at: https://defaultnamehere.github.io/dailyset/`;
+    navigator.clipboard.writeText(text);
     setCopyButtonText('Copied!');
-    setTimeout(() => setCopyButtonText('Copy'), 2000);
+    setTimeout(() => setCopyButtonText('Share Results'), 2000);
   };
 
   return (
