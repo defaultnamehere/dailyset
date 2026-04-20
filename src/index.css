@@ -253,7 +253,6 @@ button:active {
     /* Ensure 3 columns on larger screens as well */
     gap: 1rem;
     font-size: clamp(0.8rem, 2vh, 1.2rem);
-    transform: scale(clamp(0.7, 2vh, 1.2));
     transform-origin: top center;
     max-width: 100%;
     transition: transform 0.1s ease;
@@ -470,6 +469,15 @@ button.secondary-button:hover {
   animation: incorrect-shake-animation 0.3s ease-in-out;
 }
 
+
 .card-already-found::after {
   animation: already-found-overlay-animation 0.5s ease-in-out;
 }
+
+@media (orientation: landscape) and (max-height: 850px) {
+  .board {
+    transform: scale(0.8);
+    transform-origin: top center;
+  }
+}
+
