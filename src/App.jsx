@@ -51,10 +51,10 @@ function App() {
     }, 1000);
   };
 
-  const startNewGame = useCallback(() => {
+  const startNewGame = useCallback((customSeed = null) => {
     const timeZone = 'Australia/Sydney';
     const today = new Date();
-    const seed = formatInTimeZone(today, timeZone, 'yyyy-MM-dd');
+    const seed = customSeed ?? formatInTimeZone(today, timeZone, 'yyyy-MM-dd');
     setSeedDate(seed);
     const rng = seedrandom(seed);
 
@@ -76,6 +76,11 @@ function App() {
   const winGame = () => {
     setFoundSets(allSets);
     setIsGameWon(true);
+  };
+
+  const handleShuffle = () => {
+    const randomSeed = Math.random().toString(36).slice(2, 10); // short alphanumeric seed
+    startNewGame(randomSeed);
   };
 
   const triggerExplosion = () => {
@@ -186,10 +191,7 @@ function App() {
 
   const handleShareResult = () => {
     const timeInSeconds = Math.round(elapsedTime / 1000);
-    const today = new Date();
-    const pad = (n) => String(n).padStart(2, '0');
-    const dateStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
-    const text = `Daily SET\n${dateStr}\n${timeInSeconds} seconds\nPlay it yourself at: https://defaultnamehere.github.io/dailyset/`;
+    const text = `Daily SET\n${seedDate}\n${timeInSeconds} seconds\nPlay it yourself at: https://defaultnamehere.github.io/dailyset/`;
     navigator.clipboard.writeText(text);
     setShareButtonText('Copied!');
     setTimeout(() => setShareButtonText('Share Result'), 2000);
@@ -269,20 +271,40 @@ function App() {
                   <button onClick={handleShareResult} className={`copy-button ${shareButtonText === 'Copied!' ? 'copied' : ''}`}>
                     {shareButtonText}
                   </button>
+                  <button onClick={handleShuffle} className="secondary-button" style={{ marginTop: '0.5rem' }}>New Puzzle</button>
                 </div>
               </div>
             ) : (
               <>
-                <button onClick={winGame} className="secondary-button">Show Solution</button>
-                <label htmlFor="party-mode" className="toggle-switch party-mode-toggle">
-                  <input
-                    type="checkbox"
-                    id="party-mode"
-                    checked={partyMode}
-                    onChange={() => setPartyMode(!partyMode)}
-                  />
-                  <span className="toggle-slider"></span>
-                </label>
+                <button onClick={winGame} className="secondary-button icon-action" aria-label="Show Solution">
+                  <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span className="btn-label">Show Solution</span>
+                </button>
+                <div className="actions-right">
+                  <button onClick={handleShuffle} className="secondary-button icon-action" aria-label="New Puzzle">
+                    <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+                      <rect x="3" y="3" width="18" height="18" rx="3" />
+                      <circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none" />
+                      <circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none" />
+                      <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none" />
+                      <circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none" />
+                      <circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none" />
+                    </svg>
+                    <span className="btn-label">New Puzzle</span>
+                  </button>
+                  <label htmlFor="party-mode" className="toggle-switch party-mode-toggle">
+                    <input
+                      type="checkbox"
+                      id="party-mode"
+                      checked={partyMode}
+                      onChange={() => setPartyMode(!partyMode)}
+                    />
+                    <span className="toggle-slider"></span>
+                  </label>
+                </div>
               </>
             )}
           </div>

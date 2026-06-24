@@ -161,6 +161,23 @@ header p {
   /* No margin needed now */
 }
 
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon shown only on mobile; text label is the default on larger screens */
+.btn-icon {
+  display: none;
+}
+
 button {
   flex-grow: 0;
   /* Prevent buttons from growing */
@@ -220,6 +237,22 @@ button:active {
 @media (max-width: 767px) {
   .header-top {
     padding: 2rem 0;
+  }
+
+  /* Compact icon-only buttons to keep the actions bar from overflowing */
+  .icon-action {
+    min-width: unset;
+    padding: 0.6em 0.85em;
+  }
+
+  .icon-action .btn-label {
+    display: none;
+  }
+
+  .icon-action .btn-icon {
+    display: block;
+    width: 1.4em;
+    height: 1.4em;
   }
 }
 
