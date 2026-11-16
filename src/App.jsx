@@ -122,6 +122,19 @@ function App() {
 
   useEffect(() => {
     startNewGame();
+
+    // The page can load long before anyone sees it: Chrome prerenders a URL
+    // while you're still typing it in the address bar, Safari preloads its
+    // "Top Hit", and a link opened in a background tab loads hidden. Start the
+    // clock the first time the page is actually visible, not when it loaded.
+    if (document.visibilityState === 'visible') return;
+    const startClockWhenVisible = () => {
+      if (document.visibilityState !== 'visible') return;
+      setStartTime(Date.now());
+      document.removeEventListener('visibilitychange', startClockWhenVisible);
+    };
+    document.addEventListener('visibilitychange', startClockWhenVisible);
+    return () => document.removeEventListener('visibilitychange', startClockWhenVisible);
   }, [startNewGame]);
 
   useEffect(() => {
